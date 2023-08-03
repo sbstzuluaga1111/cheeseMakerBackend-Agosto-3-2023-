@@ -10,6 +10,9 @@ const { postCategoria
 const { deleteCategoria
 } = require('../controllers/categoria.controllers.js');
 
+const { getCategoria
+} = require('../controllers/categoria.controllers.js');
+
 const router = Router();
 
 /**
@@ -19,7 +22,7 @@ const router = Router();
 
 
 
-
+router.get("/", getCategoria);
 // Crear categoria - privado - cualquier persona con un token válido
 router.post('/', [ 
     check('nombre','El nombre es obligatorio').not().isEmpty(),
@@ -36,7 +39,8 @@ router.delete("/:id", [
               validateJWT,
                  isAdminRole,   
           check('id', 'No es un ID válido').isMongoId(),
-          check('id').custom( userExist ),
+          check('nombre').custom(nameExist),
+          check('usuario').custom( userExist ),
           validateDocuments
       ], deleteCategoria );
 
@@ -46,11 +50,11 @@ router.put("/:id",
 [
       check('id', 'No es un ObjectID MongoDB válido').isMongoId(),
 
-      check('id').custom( userExistsById ),
-      check('rol').custom(isValidRole),
+      check('nombre').custom( nameExist ),
+      check('usuario').custom(iuserExist),
       validateDocuments
   ], putCategoria );
-  
+
 router.patch("/", patchUsers);
 
 

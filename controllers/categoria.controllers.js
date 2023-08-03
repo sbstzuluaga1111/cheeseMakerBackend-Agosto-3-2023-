@@ -48,9 +48,9 @@ const getCategoria = async(req, res)=>{
 //const total = await Usuario.countDocuments(query)
 
     const [ total, usuarios ] = await Promise.all([
-        Usuario.countDocuments(query),
-        Usuario.find(query)
-            .skip( Number( desde ) )
+        Categoria.countDocuments(query),
+        Categoria.find(query)
+            .skip( Number( desde ))
             .limit(Number( hasta ))
     ]);
 
